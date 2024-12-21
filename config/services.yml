@@ -1,0 +1,8 @@
+imports:
+    - { resource: ./common.yml }
+services:
+    prestashop.module.elasticmainmenu.db.install:
+        class: Module\ElasticMainmenu\Database\DbInstaller
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '%database_prefix%'

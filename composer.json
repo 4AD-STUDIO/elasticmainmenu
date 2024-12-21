@@ -1,0 +1,22 @@
+{
+    "name": "prestashop/elasticmainmenu",
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "4AD STUDIO",
+            "email": "biuro@4adstudio.pl"
+        },
+        {
+            "name": "4AD STUDIO"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Module\\ElasticMainmenu\\": "src/"
+      },
+      "config": {
+        "prepend-autoloader": false
+      },
+      "type": "prestashop-module"
+    }
+}
