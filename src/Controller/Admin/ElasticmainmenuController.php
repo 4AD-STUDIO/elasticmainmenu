@@ -16,7 +16,7 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
             [
                 'enableSidebar' => true,
                 'layoutTitle' => $this->trans('Elastic MainMenu', 'Modules.Elasticmainmenu.Admin'),
-                'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
+                // 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
                 // 'quoteGrid' => $this->presentGrid($quoteGrid),
             ]
         );

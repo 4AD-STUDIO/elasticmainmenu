@@ -1,6 +1,13 @@
 imports:
     - { resource: ./common.yml }
+
 services:
+    prestashop.module.elasticmainmenu.controller.admin.elasticmainmenu:
+        class: Module\ElasticMainmenu\Controller\Admin\ElasticmainmenuController
+        arguments: ['@prestashop.core.hook.dispatcher', '@prestashop.adapter.legacy.context']
+        tags:
+            - { name: controller.service_arguments }
+
     prestashop.module.elasticmainmenu.db.install:
         class: Module\ElasticMainmenu\Database\DbInstaller
         arguments:

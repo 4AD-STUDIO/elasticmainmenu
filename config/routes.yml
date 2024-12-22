@@ -1,8 +1,8 @@
 # @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
-ps_demodoctrine_quote_index:
-    path: /elasticmainmenu/nav-positions
+ps_elasticmainmenu_index:
+    path: /elastic-mainmenu/index
     methods: [GET]
     defaults:
         _controller: 'Module\ElasticMainmenu\Controller\Admin\ElasticmainmenuController::indexAction'
-        _legacy_controller: 'AdminElasticmainmenu'
-        _legacy_link: 'AdminElasticmainmenu'
+        _legacy_controller: 'AdminElasticMainmenu'
+        _legacy_link: 'AdminElasticMainmenu'

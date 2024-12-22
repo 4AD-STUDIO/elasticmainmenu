@@ -62,9 +62,10 @@ class ElasticMainmenu extends Module
     public function getContent()
     {
         Tools::redirectAdmin(
-            $this->context->link->getAdminLink('AdminElasticmainmenu')
+            $this->context->link->getAdminLink('AdminElasticMainmenu')
         );
     }
+    
 
     private function getInstaller()
     {
