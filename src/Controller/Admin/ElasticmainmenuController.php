@@ -3,21 +3,35 @@ declare(strict_types=1);
 
 namespace Module\ElasticMainmenu\Controller\Admin;
 
-use Module\DemoDoctrine\Grid\Filters\QuoteFilters;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Response;
+use Module\ElasticMainmenu\Grid\Filters\CategoryFilters;
+use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteria;
 
 class ElasticmainmenuController extends FrameworkBundleAdminController
 {
-    public function indexAction()
+
+    /**
+     *
+     * @param CategoryFilters $filters
+     *
+     * @return Response
+     */
+
+    public function indexAction(CategoryFilters $filters)
     {
+
+        $categoriesGridFactory = $this->get('prestashop.module.elasticmainmenu.grid.factory.categories');
+  
+        $categoriesGrid = $categoriesGridFactory->getGrid(); //stad wychodzi blad
+
         return $this->render(
             '@Modules/elasticmainmenu/views/templates/admin/index.html.twig',
             [
                 'enableSidebar' => true,
                 'layoutTitle' => $this->trans('Elastic MainMenu', 'Modules.Elasticmainmenu.Admin'),
                 // 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
-                // 'quoteGrid' => $this->presentGrid($quoteGrid),
+                'categoriesGrid' => $this->presentGrid($categoriesGrid),
             ]
         );
     }

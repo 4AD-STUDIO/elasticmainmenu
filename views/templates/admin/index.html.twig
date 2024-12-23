@@ -12,10 +12,10 @@
 (https://devdocs.prestashop-project.org/8/modules/concepts/templating/admin-views/#override-templates) #}
 
 {% block content %}
-    {% block quotes_list_panel %}
+    {% block categories_list_panel %}
         <div class="row">
             <div class="col">
-                {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': quoteGrid} %}
+                {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': categoriesGrid} %}
             </div>
         </div>
     {% endblock %}
