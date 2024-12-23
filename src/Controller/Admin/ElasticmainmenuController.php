@@ -23,7 +23,7 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
 
         $categoriesGridFactory = $this->get('prestashop.module.elasticmainmenu.grid.factory.categories');
   
-        $categoriesGrid = $categoriesGridFactory->getGrid(); //stad wychodzi blad
+        $categoriesGrid = $categoriesGridFactory->getGrid($filters); //stad wychodzi blad
 
         return $this->render(
             '@Modules/elasticmainmenu/views/templates/admin/index.html.twig',
