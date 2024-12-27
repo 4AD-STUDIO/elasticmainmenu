@@ -105,7 +105,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         ->select('category.`id_category`, categorylang.`name`, category.`id_parent`');
 
         $qb->andWhere('category.id_parent = :idParent')
-        ->setParameter('idParent', 5);
+        ->setParameter('idParent', 9);
 
         // dump($qb);exit;
 
@@ -137,7 +137,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
   
 
         $qb->andWhere('categorylang.id_category = :idCategory')
-        ->setParameter('idCategory', 7);
+        ->setParameter('idCategory', 6);
 
         return $qb;
     }
@@ -167,47 +167,11 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         );
 
 
-        $sqlFilters = new SqlFilters();
-        $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
         $qb->setParameter('id_shop', $this->contextShopId);
         $qb->setParameter('id_lang', $this->contextLanguageId);
 
-        foreach ($filterValues as $filterName => $filter) {
-            if ('active' === $filterName) {
-                $qb->andWhere('ps.`active` = :active');
-                $qb->setParameter('active', $filter);
 
-                continue;
-            }
-
-            if ('name' === $filterName) {
-                $qb->andWhere('pl.`name` LIKE :name');
-                $qb->setParameter('name', '%' . $filter . '%');
-
-                continue;
-            }
-
-            if ('reference' === $filterName) {
-                $qb->andWhere('p.`reference` LIKE :reference');
-                $qb->setParameter('reference', '%' . $filter . '%');
-
-                continue;
-            }
-
-            if (version_compare(_PS_VERSION_, '8.0', '<')) {
-                if ('price_tax_excluded' === $filterName) {
-                    if (isset($filter['min_field'])) {
-                        $qb->andWhere('ps.`price` >= :price_min');
-                        $qb->setParameter('price_min', $filter['min_field']);
-                    }
-                    if (isset($filter['max_field'])) {
-                        $qb->andWhere('ps.`price` <= :price_max');
-                        $qb->setParameter('price_max', $filter['max_field']);
-                    }
-                }
-            }
-        }
 
         return $qb;
     }
