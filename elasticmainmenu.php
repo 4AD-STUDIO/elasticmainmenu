@@ -18,8 +18,6 @@ class ElasticMainmenu extends Module
     public function __construct()
     {
 
-        // $loadedClasses = get_declared_classes();
-        // dump($loadedClasses);
         $this->name = 'elasticmainmenu';
         $this->author = '4AD STUDIO';
         $this->version = '1.0.0';

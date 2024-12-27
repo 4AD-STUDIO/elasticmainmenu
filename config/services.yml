@@ -33,7 +33,7 @@ services:
         - '@elasticmainmenu.grid.query_builder.product'
         - '@prestashop.core.hook.dispatcher'
         - '@prestashop.core.grid.query.doctrine_query_parser'
-        - 'product'
+        - 'category'
     elasticmainmenu.grid.query_builder.product:
         class: 'Module\ElasticMainmenu\Grid\Query\ProductQueryBuilder'
         parent: 'prestashop.core.grid.abstract_query_builder'

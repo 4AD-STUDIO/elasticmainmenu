@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Module\ElasticMainmenu\Grid\Filters;
 
-use Module\DemoGrid\Grid\Definition\Factory\ProductGridDefinitionFactory;
+use Module\ElasticMainmenu\Grid\Definition\Factory\ProductGridDefinitionFactory;
 use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class ProductFilters extends Filters
@@ -37,7 +37,7 @@ class ProductFilters extends Filters
         return [
             'limit' => 10,
             'offset' => 0,
-            'orderBy' => 'id_product',
+            'orderBy' => 'id_category',
             'sortOrder' => 'asc',
             'filters' => [],
         ];

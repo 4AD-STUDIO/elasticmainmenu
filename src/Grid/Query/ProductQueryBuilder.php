@@ -97,24 +97,29 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
+
+      
+
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
         $qb
-            ->select('p.`id_product`, p.`reference`')
-            ->addSelect('ps.`price` AS `price_tax_excluded`, ps.`active`')
-            ->addSelect('pl.`name`, pl.`link_rewrite`')
-            ->addSelect('cl.`name` AS `category`')
-            ->addSelect('img_shop.`id_image`')
-            ->addSelect('p.`id_tax_rules_group`')
-        ;
+        ->select('category.`id_category`, categorylang.`name`, category.`id_parent`');
 
-        if ($this->configuration->getBoolean('PS_STOCK_MANAGEMENT')) {
-            $qb->addSelect('sa.`quantity`');
-        }
+        $qb->andWhere('category.id_parent = :idParent')
+        ->setParameter('idParent', 5);
 
-        $this->searchCriteriaApplicator
-            ->applyPagination($searchCriteria, $qb)
-            ->applySorting($searchCriteria, $qb)
-        ;
+        // dump($qb);exit;
+
+        // dump($qb); exit;
+  
+
+        // if ($this->configuration->getBoolean('PS_STOCK_MANAGEMENT')) {
+        //     $qb->addSelect('sa.`quantity`');
+        // }
+
+        // $this->searchCriteriaApplicator
+        //     ->applyPagination($searchCriteria, $qb)
+        //     ->applySorting($searchCriteria, $qb)
+        // ;
 
         return $qb;
     }
@@ -125,7 +130,14 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
-        $qb->select('COUNT(p.`id_product`)');
+        $qb->select('categorylang.id_category');
+
+        // dump($qb); exit;
+        // $qb->select('COUNT(categorylang.`id_category`)');
+  
+
+        $qb->andWhere('categorylang.id_category = :idCategory')
+        ->setParameter('idCategory', 7);
 
         return $qb;
     }
@@ -139,79 +151,23 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private function getQueryBuilder(array $filterValues): QueryBuilder
     {
+        // $qb = $this->connection
+        //     ->createQueryBuilder()
+        //     ->from($this->dbPrefix . 'category', 'category')
+        // ;
+// echo "fffffffffff";
         $qb = $this->connection
-            ->createQueryBuilder()
-            ->from($this->dbPrefix . 'product', 'p')
-            ->innerJoin(
-                'p',
-                $this->dbPrefix . 'product_shop',
-                'ps',
-                'ps.`id_product` = p.`id_product` AND ps.`id_shop` = :id_shop'
-            )
-            ->leftJoin(
-                'p',
-                $this->dbPrefix . 'product_lang',
-                'pl',
-                'pl.`id_product` = p.`id_product` AND pl.`id_lang` = :id_lang AND pl.`id_shop` = :id_shop'
-            )
-            ->leftJoin(
-                'ps',
-                $this->dbPrefix . 'category_lang',
-                'cl',
-                'cl.`id_category` = ps.`id_category_default` AND cl.`id_lang` = :id_lang AND cl.`id_shop` = :id_shop'
-            )
-            ->leftJoin(
-                'ps',
-                $this->dbPrefix . 'image_shop',
-                'img_shop',
-                'img_shop.`id_product` = ps.`id_product` AND img_shop.`cover` = 1 AND img_shop.`id_shop` = :id_shop'
-            )
-            ->andWhere('p.`state`=1')
-        ;
+        ->createQueryBuilder()
+        ->from($this->dbPrefix . 'category', 'category')
+        ->innerJoin(
+            'category',
+            $this->dbPrefix . 'category_lang',
+            'categorylang',
+            'categorylang.`id_category` = category.`id_category`'
+        );
 
-        $isStockManagementEnabled = $this->configuration->getBoolean('PS_STOCK_MANAGEMENT');
-
-        if ($isStockManagementEnabled) {
-            $stockOnCondition =
-                'sa.`id_product` = p.`id_product`
-                    AND sa.`id_product_attribute` = 0
-                ';
-
-            if ($this->isStockSharingBetweenShopGroupEnabled) {
-                $stockOnCondition .= '
-                     AND sa.`id_shop` = 0 AND sa.`id_shop_group` = :id_shop_group
-                ';
-            } else {
-                $stockOnCondition .= '
-                     AND sa.`id_shop` = :id_shop AND sa.`id_shop_group` = 0
-                ';
-            }
-
-            $qb->leftJoin(
-                'p',
-                $this->dbPrefix . 'stock_available',
-                'sa',
-                $stockOnCondition
-            );
-
-            $qb->setParameter('id_shop_group', $this->contextShopGroupId);
-        }
 
         $sqlFilters = new SqlFilters();
-        $sqlFilters
-            ->addFilter(
-                'id_product',
-                'p.`id_product`',
-                SqlFilters::WHERE_STRICT
-            );
-        if (version_compare(_PS_VERSION_, '8.0', '>=')) {
-            $sqlFilters
-                ->addFilter(
-                    'price_tax_excluded',
-                    'ps.`price`',
-                    SqlFilters::MIN_MAX
-                );
-        }
         $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
         $qb->setParameter('id_shop', $this->contextShopId);

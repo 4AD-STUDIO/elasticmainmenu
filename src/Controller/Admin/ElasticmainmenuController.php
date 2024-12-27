@@ -19,8 +19,8 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
      */
     public function indexAction(ProductFilters $filters)
     {
-        $quoteGridFactory = $this->get('demo_grid.grid.factory.products');
-        $quoteGrid = $quoteGridFactory->getGrid($filters);
+        $quoteGridFactory = $this->get('elasticmainmenu.grid.factory.products');
+        $quoteGrid2 = $quoteGridFactory->getGrid($filters);
 
         return $this->render(
             '@Modules/elasticmainmenu/views/templates/admin/index.html.twig',
@@ -28,7 +28,21 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
                 'enableSidebar' => true,
                 'layoutTitle' => $this->trans('Elastic MainMenu', 'Modules.Elasticmainmenu.Admin'),
                 // 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
-                'quoteGrid' => $this->presentGrid($quoteGrid),
+                'quoteGrid' => $this->presentGrid($quoteGrid2),
+            ]
+        );
+    }
+    public function categoryAction($id_parent, ProductFilters $filters) {
+        $quoteGridFactory = $this->get('elasticmainmenu.grid.factory.products');
+        $quoteGrid2 = $quoteGridFactory->getGrid($filters);
+echo $id_parent;
+        return $this->render(
+            '@Modules/elasticmainmenu/views/templates/admin/index.html.twig',
+            [
+                'enableSidebar' => true,
+                'layoutTitle' => $this->trans('Elastic MainMenu', 'Modules.Elasticmainmenu.Admin'),
+                // 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
+                'quoteGrid' => $this->presentGrid($quoteGrid2),
             ]
         );
     }

@@ -6,3 +6,10 @@ ps_elasticmainmenu_index:
         _controller: 'Module\ElasticMainmenu\Controller\Admin\ElasticmainmenuController::indexAction'
         _legacy_controller: 'AdminElasticMainmenu'
         _legacy_link: 'AdminElasticMainmenu'
+ps_elasticmainmenu_category:
+    path: /elastic-mainmenu/category/{id_parent}
+    methods: [GET]
+    defaults:
+        _controller: 'Module\ElasticMainmenu\Controller\Admin\ElasticmainmenuController::categoryAction'
+        _legacy_controller: 'AdminElasticMainmenu'
+        _legacy_link: 'AdminElasticMainmenu'

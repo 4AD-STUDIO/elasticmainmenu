@@ -31,10 +31,11 @@ use PrestaShop\PrestaShop\Core\Grid\Filter\FilterCollection;
 use PrestaShopBundle\Form\Admin\Type\NumberMinMaxFilterType;
 use PrestaShopBundle\Form\Admin\Type\SearchAndResetType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\LinkColumn;
 
 class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
 {
-    const GRID_ID = 'product';
+    const GRID_ID = 'category';
 
     /**
      * {@inheritdoc}
@@ -49,7 +50,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     protected function getName()
     {
-        return $this->trans('Products', [], 'Modules.Demogrid.Admin');
+        return 'Test name';
     }
 
     /**
@@ -58,44 +59,22 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
     protected function getColumns()
     {
         return (new ColumnCollection())
-            ->add(
-                (new DataColumn('id_product'))
-                    ->setOptions([
-                        'field' => 'id_product',
-                    ])
+        ->add(
+            (new DataColumn('id_category'))
+                ->setOptions([
+                    'field' => 'id_category',
+                ])
             )
             ->add(
-                (new DataColumn('name'))
-                    ->setName($this->trans('Name', [], 'Modules.Demogrid.Admin'))
+                (new LinkColumn('name'))
                     ->setOptions([
                         'field' => 'name',
+                        'route' => 'ps_elasticmainmenu_category',
+                        'route_param_name' => 'id_parent',
+                        'route_param_field' => 'id_parent'
                     ])
-            )
-            ->add(
-                (new DataColumn('price_tax_excluded'))
-                    ->setName($this->trans('Price', [], 'Modules.Demogrid.Admin'))
-                    ->setOptions([
-                        'field' => 'price_tax_excluded',
-                    ])
-            )
-            ->add(
-                (new DataColumn('reference'))
-                    ->setName($this->trans('Reference', [], 'Modules.Demogrid.Admin'))
-                    ->setOptions([
-                        'field' => 'reference',
-                    ])
-            )
-            ->add(
-                (new DataColumn('active'))
-                    ->setName($this->trans('Active', [], 'Modules.Demogrid.Admin'))
-                    ->setOptions([
-                        'field' => 'active',
-                    ])
-            )
-            ->add(
-                (new ActionColumn('actions'))
-                    ->setName($this->trans('Actions', [], 'Admin.Actions'))
-            );
+                )
+            ;
     }
 
     /**
@@ -103,79 +82,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     protected function getFilters()
     {
-        return (new FilterCollection())
-            ->add(
-                (new Filter('id_product', TextType::class))
-                    ->setTypeOptions([
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => $this->trans('ID', [], 'Admin.Global'),
-                        ],
-                    ])
-                    ->setAssociatedColumn('id_product')
-            )
-            ->add(
-                (new Filter('name', TextType::class))
-                    ->setTypeOptions([
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => $this->trans('Name', [], 'Admin.Global'),
-                        ],
-                    ])
-                    ->setAssociatedColumn('name')
-            )
-            ->add(
-                (new Filter('price_tax_excluded', NumberMinMaxFilterType::class, [
-                    'min_field_options' => [
-                        'attr' => [
-                            'placeholder' => $this->trans('Min', [], 'Admin.Global'),
-                        ],
-                    ],
-                    'max_field_options' => [
-                        'attr' => [
-                            'placeholder' => $this->trans('Max', [], 'Admin.Global'),
-                        ],
-                    ],
-                ]))
-                    ->setTypeOptions([
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => $this->trans('Price', [], 'Admin.Global'),
-                        ],
-                    ])
-                    ->setAssociatedColumn('price_tax_excluded')
-            )
-            ->add(
-                (new Filter('reference', TextType::class))
-                    ->setTypeOptions([
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => $this->trans('Reference', [], 'Modules.Demogrid.Admin'),
-                        ],
-                    ])
-                    ->setAssociatedColumn('reference')
-            )
-            ->add(
-                (new Filter('active', TextType::class))
-                    ->setTypeOptions([
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => $this->trans('Active', [], 'Modules.Demogrid.Admin'),
-                        ],
-                    ])
-                    ->setAssociatedColumn('active')
-            )
-            ->add(
-                (new Filter('actions', SearchAndResetType::class))
-                    ->setTypeOptions([
-                        'reset_route' => 'admin_common_reset_search_by_filter_id',
-                        'reset_route_params' => [
-                            'filterId' => self::GRID_ID,
-                        ],
-                        'redirect_route' => 'demo_grid_index',
-                    ])
-                    ->setAssociatedColumn('actions')
-            )
-        ;
+        return (new FilterCollection());
+
     }
 }
