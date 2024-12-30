@@ -71,7 +71,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                         'field' => 'name',
                         'route' => 'ps_elasticmainmenu_category',
                         'route_param_name' => 'id_parent',
-                        'route_param_field' => 'id_parent'
+                        'route_param_field' => 'id_category'
                     ])
                 )
             ;
