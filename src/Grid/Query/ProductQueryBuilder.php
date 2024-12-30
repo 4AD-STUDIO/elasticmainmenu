@@ -92,6 +92,24 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->configuration = $configuration;
     }
 
+    public function getCurrentCategory() {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $currentUrl = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        $parsedUrl = parse_url($currentUrl);
+        $path = $parsedUrl['path']; // Wyciągnięcie ścieżki z URL
+
+        preg_match('#/category/(\d+)#', $path, $matches);
+
+        if (isset($matches[1])) {
+            $id = $matches[1];
+            return $id;
+        } else {
+            echo "ID nie znaleziono.";
+        }
+
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -105,21 +123,10 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         ->select('category.`id_category`, categorylang.`name`, category.`id_parent`');
 
         $qb->andWhere('category.id_parent = :idParent')
-        ->setParameter('idParent', 9);
+        ->setParameter('idParent', $this->getCurrentCategory());
 
-        // dump($qb);exit;
 
-        // dump($qb); exit;
-  
 
-        // if ($this->configuration->getBoolean('PS_STOCK_MANAGEMENT')) {
-        //     $qb->addSelect('sa.`quantity`');
-        // }
-
-        // $this->searchCriteriaApplicator
-        //     ->applyPagination($searchCriteria, $qb)
-        //     ->applySorting($searchCriteria, $qb)
-        // ;
 
         return $qb;
     }
@@ -132,12 +139,10 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
         $qb->select('categorylang.id_category');
 
-        // dump($qb); exit;
-        // $qb->select('COUNT(categorylang.`id_category`)');
-  
+
 
         $qb->andWhere('categorylang.id_category = :idCategory')
-        ->setParameter('idCategory', 6);
+        ->setParameter('idCategory', $this->getCurrentCategory());
 
         return $qb;
     }
@@ -151,11 +156,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private function getQueryBuilder(array $filterValues): QueryBuilder
     {
-        // $qb = $this->connection
-        //     ->createQueryBuilder()
-        //     ->from($this->dbPrefix . 'category', 'category')
-        // ;
-// echo "fffffffffff";
         $qb = $this->connection
         ->createQueryBuilder()
         ->from($this->dbPrefix . 'category', 'category')
