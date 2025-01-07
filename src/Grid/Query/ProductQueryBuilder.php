@@ -120,7 +120,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
         $qb
-        ->select('category.`id_category`, categorylang.`name`, category.`id_parent`');
+        ->select('category.`id_category`, categorylang.`name`, category.`id_parent`, category.`emm_position`');
 
         $qb->andWhere('category.id_parent = :idParent')
         ->setParameter('idParent', $this->getCurrentCategory());

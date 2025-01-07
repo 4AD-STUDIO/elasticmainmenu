@@ -1,2 +1,2 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_elasticmainmenu` (id_elasticmainmenu INT AUTO_INCREMENT NOT NULL, id_category INT NOT NULL, link_name VARCHAR(255) NOT NULL, link_url VARCHAR(255) NOT NULL, link_enabled int NOT NULL, date_add DATETIME NOT NULL, date_upd DATETIME NOT NULL, PRIMARY KEY(id_elasticmainmenu)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-ALTER TABLE ps_category_lang ADD COLUMN emm_position INT DEFAULT 0 AFTER meta_keywords, ADD COLUMN emm_enabled INT DEFAULT 1 AFTER emm_position;
+ALTER TABLE ps_category ADD COLUMN emm_position INT DEFAULT 0, ADD COLUMN emm_enabled INT DEFAULT 1 AFTER emm_position;

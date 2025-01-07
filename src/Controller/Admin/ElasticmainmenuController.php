@@ -19,6 +19,7 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
      */
     public function indexAction(ProductFilters $filters)
     {
+        
         $quoteGridFactory = $this->get('elasticmainmenu.grid.factory.products');
         $quoteGrid2 = $quoteGridFactory->getGrid($filters);
 
@@ -33,6 +34,7 @@ class ElasticmainmenuController extends FrameworkBundleAdminController
         );
     }
     public function categoryAction($id_parent, ProductFilters $filters) {
+        
         $quoteGridFactory = $this->get('elasticmainmenu.grid.factory.products');
         $quoteGrid2 = $quoteGridFactory->getGrid($filters);
 echo $id_parent;

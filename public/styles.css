@@ -1,0 +1,11 @@
+.elasticmainmenu__position {
+    background-color: rgb(231, 231, 231);
+    cursor:grab;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+}
+
+.drag-over {
+    border-bottom: 3px solid gray;
+}
