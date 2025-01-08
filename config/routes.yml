@@ -13,3 +13,15 @@ ps_elasticmainmenu_category:
         _controller: 'Module\ElasticMainmenu\Controller\Admin\ElasticmainmenuController::categoryAction'
         _legacy_controller: 'AdminElasticMainmenu'
         _legacy_link: 'AdminElasticMainmenu'
+ps_elasticmainmenu_updatepositions:
+    path: /elastic-mainmenu/updatepositions/{idstart}/{idend}
+    methods: [GET]
+    defaults:
+        _controller: 'Module\ElasticMainmenu\Controller\Admin\AdminTableController::updatePositions'
+        _legacy_controller: 'AdminElasticMainmenu'
+ps_elasticmainmenu_test:
+    path: /elastic-mainmenu/test/{idstart}/{idend}
+    methods: [GET]
+    defaults:
+        _controller: 'Module\ElasticMainmenu\Controller\Admin\AdminTableController::test'
+        _legacy_controller: 'AdminElasticMainmenu'

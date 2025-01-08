@@ -60,6 +60,9 @@ window.onload = (event) => {
         const target = e.target.closest('.draggable');
         if (target && target !== draggedElement) {
             categoriesContainer.insertBefore(draggedElement, target.nextSibling);
+            const beginId = draggedElement.querySelector(".column-emm_position").innerText;
+            const endId = target.querySelector(".column-emm_position").innerText;
+            updatePositions(beginId, endId);
         }
         categoriesContainer.querySelectorAll('.draggable').forEach(el => el.classList.remove('drag-over'));
     });
@@ -68,7 +71,36 @@ window.onload = (event) => {
         draggedElement = null;
     });
 
+    function updatePositions(beginId, endId) {
+        const url = window.token_4ad;
+        console.log(token);
+        // const csrfToken = document.querySelector('input[name="_token"]').value;
+        // const url = "http://localhost:8080/admin4577/index.php/modules/elastic-mainmenu/updatepositions/22/22&token=" + token;
 
+
+
+// console.log(token);
+
+
+        // const url = `http://localhost:8080/admin4577/index.php/modules/elastic-mainmenu/updatepositions/${beginId}/${endId}&token=${token}`;
+//localhost:8080/admin4577/index.php/modules/elastic-mainmenu/test/22/22&token=687c89dd98fc02419f5eae1cee4c5bce#/dashboard
+ 
+
+
+        // console.log();
+        fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            // messageDiv.innerHTML = data;
+            // activateMessage('success');
+            console.log(data);
+        })
+        .catch(error => {
+            // messageDiv.innerHTML = 'Błąd: ' + error;
+            // activateMessage('error');
+            console.log('Błąd: '+error);
+        });
+    }
 
  
     

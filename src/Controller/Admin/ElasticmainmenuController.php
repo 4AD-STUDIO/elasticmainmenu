@@ -48,5 +48,8 @@ echo $id_parent;
             ]
         );
     }
+    public function ajaxProcessUpdatePositions() {
+        return "Dzień dobry";
+    }
 
 }

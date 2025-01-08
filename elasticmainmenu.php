@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Module\ElasticMainmenu\Database\DbInstaller;
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 
 if (!defined('_PS_VERSION_')) {
@@ -36,7 +37,26 @@ class ElasticMainmenu extends Module
 
     public function hookActionAdminControllerSetMedia()
 {
-    $this->context->controller->addJs($this->getPathUri() . 'public/position-handle.js?v=' . time());
+    // $token = Tools::getAdminTokenLite('AdminTableController');
+
+
+    $route = SymfonyContainer::getInstance()->get('router')->generate('ps_elasticmainmenu_updatepositions', [
+        'idstart' => '22',
+        'idend'  => '32'
+    ]);
+
+
+
+
+
+
+    // dump($token);
+    Media::addJsDef([
+        'token_4ad' => $route,
+    ]);
+
+
+    $this->context->controller->addJs($this->getPathUri() . 'public/position-handle.js?4ad_token=' . $token);
     $this->context->controller->addCSS($this->_path . '/public/styles.css');
 
 }
