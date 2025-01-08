@@ -17,9 +17,6 @@ class ElasticMainmenu extends Module
 {
     public function __construct()
     {
-
-        // $loadedClasses = get_declared_classes();
-        // dump($loadedClasses);
         $this->name = 'elasticmainmenu';
         $this->author = '4AD STUDIO';
         $this->version = '1.0.0';
@@ -29,12 +26,22 @@ class ElasticMainmenu extends Module
 
         $this->displayName = $this->l('ElasticMainMenu');
         $this->description = $this->l('This module allows you to easily compose and speed up your top nav.');
+
     }
 
     public function install()
     {
-        return $this->installTables() && parent::install() && $this->registerHook('displayHome');
+        return $this->installTables() && parent::install() && $this->registerHook('displayHome') && $this->registerHook('actionAdminControllerSetMedia');
     }
+
+    public function hookActionAdminControllerSetMedia()
+{
+    $this->context->controller->addJs($this->getPathUri() . 'public/position-handle.js?v=' . time());
+    $this->context->controller->addCSS($this->_path . '/public/styles.css');
+
+}
+
+
 
     public function uninstall()
     {
@@ -45,8 +52,9 @@ class ElasticMainmenu extends Module
     {
         /** @var DbInstaller $installer */
         $installer = $this->getInstaller();
+        
         $errors = $installer->createTables();
-
+        $installer->setInitialPositions();
         return empty($errors);
     }
 
@@ -61,6 +69,7 @@ class ElasticMainmenu extends Module
 
     public function getContent()
     {
+        
         Tools::redirectAdmin(
             $this->context->link->getAdminLink('AdminElasticMainmenu')
         );
@@ -88,4 +97,5 @@ class ElasticMainmenu extends Module
 
         return $installer;
     }
+
 }

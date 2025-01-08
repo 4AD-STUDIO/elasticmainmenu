@@ -15,6 +15,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Statement;
 
+
 /**
  * We cannot use Doctrine entities on install because the mapping is not available yet
  * but we can still use Doctrine connection to perform DQL or SQL queries.
@@ -71,8 +72,17 @@ class DbInstaller
                 ];
             }
         }
-
+        // $this->setInitialPositions();
         return $errors;
+    }
+
+    public function setInitialPositions() {
+        $updatePositions = $this->connection->executeQuery("UPDATE ps_category SET emm_position = position;");
+        if($updatePositions) {
+            return true;
+        } else {
+            echo "Błąd przy ustawianiu pozycji!";
+        }
     }
 
     /**
@@ -98,12 +108,10 @@ class DbInstaller
             }
         }
 
-        $checkIfColumnsExist = $this->connection->executeQuery("SHOW COLUMNS FROM ps_category_lang LIKE 'emm_position'");
+        $checkIfColumnsExist = $this->connection->executeQuery("SHOW COLUMNS FROM ps_category LIKE 'emm_position'");
         if ($checkIfColumnsExist->rowCount() > 0) {
-            $this->connection->executeQuery("ALTER TABLE ".$this->dbPrefix."category_lang DROP COLUMN emm_position, DROP COLUMN emm_enabled");
+            $this->connection->executeQuery("ALTER TABLE ".$this->dbPrefix."category DROP COLUMN emm_position, DROP COLUMN emm_enabled");
         }
-
-
 
         return $errors;
     }
