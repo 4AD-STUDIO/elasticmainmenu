@@ -14,13 +14,13 @@ ps_elasticmainmenu_category:
         _legacy_controller: 'AdminElasticMainmenu'
         _legacy_link: 'AdminElasticMainmenu'
 ps_elasticmainmenu_updatepositions:
-    path: /elastic-mainmenu/updatepositions/{idstart}/{idend}
+    path: /elastic-mainmenu/updatepositions/{idstart}/{idend}/{idcategory}
     methods: [GET]
     defaults:
         _controller: 'Module\ElasticMainmenu\Controller\Admin\AdminTableController::updatePositions'
         _legacy_controller: 'AdminElasticMainmenu'
 ps_elasticmainmenu_test:
-    path: /elastic-mainmenu/test/{idstart}/{idend}
+    path: /elastic-mainmenu/test/{idstart}/{idend}/{idcategory}
     methods: [GET]
     defaults:
         _controller: 'Module\ElasticMainmenu\Controller\Admin\AdminTableController::test'

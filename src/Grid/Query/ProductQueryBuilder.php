@@ -120,10 +120,15 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
         $qb
-        ->select('category.`id_category`, categorylang.`name`, category.`id_parent`, category.`emm_position`');
-
+            ->select('category.`id_category`, categorylang.`name`, category.`id_parent`, category.`emm_position`');
+        
+        // Dodanie warunku filtrowania
         $qb->andWhere('category.id_parent = :idParent')
-        ->setParameter('idParent', $this->getCurrentCategory());
+            ->setParameter('idParent', $this->getCurrentCategory());
+        
+        // Dodanie sortowania po kolumnie `emm_position`
+        $qb->orderBy('category.`emm_position`', 'ASC'); // Zastąp 'ASC' na 'DESC', jeśli chcesz sortowanie malejące
+        
 
 
 
@@ -174,5 +179,9 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
 
         return $qb;
+    }
+
+    public function test() {
+        
     }
 }

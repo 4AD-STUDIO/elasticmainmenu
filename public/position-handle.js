@@ -62,7 +62,9 @@ window.onload = (event) => {
             categoriesContainer.insertBefore(draggedElement, target.nextSibling);
             const beginId = draggedElement.querySelector(".column-emm_position").innerText;
             const endId = target.querySelector(".column-emm_position").innerText;
-            updatePositions(beginId, endId);
+            const id_category = target.querySelector(".column-id_category").innerText;
+            
+            updatePositions(beginId, endId, id_category);
         }
         categoriesContainer.querySelectorAll('.draggable').forEach(el => el.classList.remove('drag-over'));
     });
@@ -71,13 +73,15 @@ window.onload = (event) => {
         draggedElement = null;
     });
 
-    function updatePositions(beginId, endId) {
-        const url = window.token_4ad;
-        console.log(token);
+    function updatePositions(beginId, endId, id_category) {
+        // const url = window.token_4ad;
+        
         // const csrfToken = document.querySelector('input[name="_token"]').value;
         // const url = "http://localhost:8080/admin4577/index.php/modules/elastic-mainmenu/updatepositions/22/22&token=" + token;
 
+        const url = window.token_4ad.replace("|STARTID|", beginId).replace("|ENDID|", endId).replace("|IDCATEGORY|", id_category);
 
+        console.log(url+"id_category");
 
 // console.log(token);
 

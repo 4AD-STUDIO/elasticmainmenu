@@ -41,8 +41,9 @@ class ElasticMainmenu extends Module
 
 
     $route = SymfonyContainer::getInstance()->get('router')->generate('ps_elasticmainmenu_updatepositions', [
-        'idstart' => '22',
-        'idend'  => '32'
+        'idstart' => '|STARTID|',
+        'idend'  => '|ENDID|',
+        'idcategory'  => '|IDCATEGORY|'
     ]);
 
 
